@@ -13,7 +13,7 @@ module.exports = app => {
     passport.authenticate("google"),
     (req, res) => {
       res.redirect("/main");
-      res.send({ googleMessage: "You have logged in!" });
+      //res.send({ googleMessage: "You have logged in!" });
     }
   );
 
@@ -23,6 +23,6 @@ module.exports = app => {
   });
 
   app.get("/api/current_user", (req, res) => {
-    res.send(req.user);
+    res.send({ user: req.user, message: "this is current user!!" });
   });
 };
