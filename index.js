@@ -5,6 +5,8 @@ const passport = require("passport");
 //const bodyParser = require("body-parser"); // middleware
 const keys = require("./config/keys");
 require("./models/User");
+require("./models/Customer");
+
 //require("./models/Survey");
 require("./services/passport");
 
@@ -26,6 +28,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require("./routes/authRoutes.js")(app);
+require("./routes/restRoutes.js")(app);
+
 // require("./routes/billingRoutes")(app);
 // require("./routes/surveyRoutes")(app);
 
