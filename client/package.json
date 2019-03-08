@@ -7,6 +7,7 @@
     "faker": "^4.1.0",
     "http-proxy-middleware": "^0.19.1",
     "lodash": "^4.17.11",
+    "material-ui": "^0.20.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-redux": "^6.0.1",
@@ -14,6 +15,7 @@
     "react-scripts": "2.1.8",
     "redux": "^4.0.1",
     "redux-form": "^8.1.0",
+    "redux-form-material-ui": "^4.3.4",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
