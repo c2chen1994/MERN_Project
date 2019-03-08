@@ -11,7 +11,11 @@ const customerSchema = new Schema({
   lastName: String,
   age: Number,
   sex: String,
-  email: String
+  email: String,
+  userId: String,
+  position: String,
+  joinedTime: Date,
+  description: String
 });
 
 customerSchema.plugin(autoIncrement.plugin, "customer");

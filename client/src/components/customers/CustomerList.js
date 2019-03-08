@@ -9,24 +9,24 @@ class CustomerList extends React.Component {
   }
 
   renderAdmin(customer) {
-    //if (customer.userId === this.props.currentUserId) {
-    return (
-      <div className="right floated content">
-        <Link
-          to={`/customers/edit/${customer._id}`}
-          className="ui button primary"
-        >
-          Edit
-        </Link>
-        <Link
-          to={`/customers/delete/${customer._id}`}
-          className="ui button negative"
-        >
-          Delete
-        </Link>
-      </div>
-    );
-    //}
+    if (customer.userId === this.props.currentUserId) {
+      return (
+        <div className="right floated content">
+          <Link
+            to={`/customers/edit/${customer._id}`}
+            className="ui button primary"
+          >
+            Edit
+          </Link>
+          <Link
+            to={`/customers/delete/${customer._id}`}
+            className="ui button negative"
+          >
+            Delete
+          </Link>
+        </div>
+      );
+    }
   }
 
   renderList = () => {
@@ -34,9 +34,15 @@ class CustomerList extends React.Component {
       return (
         <div className="item" key={customer._id}>
           {this.renderAdmin(customer)}
-          <i className="large middle aligned icon camera" />
+          <i
+            className={`large middle aligned icon ${
+              customer.sex === "Male" ? "male" : "female"
+            }`}
+          />
           <div className="content">
-            <Link to={`/customers/${customer._id}`}>{customer.sex}</Link>
+            <Link to={`/customers/${customer._id}`}>
+              {customer.lastName + " " + customer.firstName}
+            </Link>
             <div className="description">{customer.email}</div>
           </div>
         </div>
