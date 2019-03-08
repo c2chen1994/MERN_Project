@@ -1,9 +1,15 @@
 import { FETCH_USER } from "../actions/types";
 
-export default function(state = null, action) {
+const INITIAL_STATE = { isSignedIn: null, userId: null };
+
+export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_USER:
-      return action.payload || false;
+      return {
+        ...state,
+        isSignedIn: action.payload || false,
+        userId: action.payload
+      };
     default:
       return state;
   }

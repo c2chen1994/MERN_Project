@@ -15,7 +15,8 @@ import {
 
 export const fetchUser = () => async dispatch => {
   const response = await log.get("/current_user");
-  dispatch({ type: FETCH_USER, payload: response.data });
+  //console.log(response.data._id);
+  dispatch({ type: FETCH_USER, payload: response.data._id });
 };
 
 export const createCustomer = formValues => async (dispatch, getState) => {
