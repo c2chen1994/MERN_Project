@@ -1,5 +1,5 @@
 const passport = require("passport");
-const CircularJSON = require("circular-json");
+//const CircularJSON = require("circular-json");
 module.exports = app => {
   app.get(
     "/auth/google",
@@ -23,6 +23,6 @@ module.exports = app => {
   });
 
   app.get("/api/current_user", (req, res) => {
-    res.send(CircularJSON.stringify(req));
+    res.send(req.user);
   });
 };
