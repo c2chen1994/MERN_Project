@@ -33,18 +33,18 @@ require("./routes/restRoutes.js")(app);
 // require("./routes/billingRoutes")(app);
 // require("./routes/surveyRoutes")(app);
 
-// if (process.env.NODE_ENV === "production") {
-//   // Express will serve up production assets
-//   // like our main.js file or main.css profile
-//   app.use(express.static("client/build"));
+if (process.env.NODE_ENV === "production") {
+  // Express will serve up production assets
+  // like our main.js file or main.css profile
+  app.use(express.static("client/build"));
 
-//   // Express will serve up the index.html profile
-//   // if it does not recognize the router
-//   const path = require("path");
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-//   });
-// }
+  // Express will serve up the index.html profile
+  // if it does not recognize the router
+  const path = require("path");
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 app.get("/", (req, res) => res.send({ response: "Get!!!", from: "Localhost" }));
 
