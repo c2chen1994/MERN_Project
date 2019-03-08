@@ -58,7 +58,6 @@ class CustomerDetail extends React.Component {
 
   render() {
     if (!this.props.customer) return <div>Loading...</div>;
-    const { age, email } = this.props.customer;
     return <div className="ui link cards">{this.renderCard()}</div>;
   }
 }

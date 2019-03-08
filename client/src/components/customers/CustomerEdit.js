@@ -26,7 +26,10 @@ class CustomerEdit extends React.Component {
             "lastName",
             "sex",
             "age",
-            "email"
+            "email",
+            "position",
+            "joinedTime",
+            "description"
           )}
           onSubmit={this.onSumbit}
         />

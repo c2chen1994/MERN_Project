@@ -14,7 +14,7 @@ class CustomerForm extends React.Component {
     }
   }
 
-  renderInput = ({ input, label, meta, type }) => {
+  renderInput = ({ input, label, meta, tp }) => {
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
 
     return (
@@ -23,7 +23,7 @@ class CustomerForm extends React.Component {
         <input
           {...input}
           autoComplete="off"
-          type={type === "date" ? "date" : "text"}
+          type={tp === "date" ? "date" : "text"}
         />
         {this.renderError(meta)}
       </div>
@@ -44,7 +44,7 @@ class CustomerForm extends React.Component {
           component={this.renderInput}
           label={label}
           name={name}
-          type={type}
+          tp={type}
         />
       );
     });
