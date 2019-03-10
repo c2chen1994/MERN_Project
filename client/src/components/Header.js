@@ -4,17 +4,18 @@ import GoogleAuth from "./GoogleAuth";
 
 const Header = () => {
   return (
-    <div className="ui secondary pointing menu">
-      <div className="left menu">
-        <div className="ui header ">
-          <Link to="/" className="item">
-            <i className="large aligned icon node right floated " />
-            <i className="large aligned icon copyright left floated" /> by ZHUO
-          </Link>
+    <div className="ui inverted segment">
+      <div className="ui container">
+        <div className="ui inverted secondary menu">
+          <div className="item">
+            <Link to="/" className="item">
+              <i className="large home icon app-icon" />
+            </Link>
+          </div>
+          <div className="right item">
+            <GoogleAuth />
+          </div>
         </div>
-      </div>
-      <div className="right menu">
-        <GoogleAuth />
       </div>
     </div>
   );

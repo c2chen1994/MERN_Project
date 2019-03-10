@@ -134,7 +134,11 @@ class CustomerList extends React.Component {
             <Link to={`/customers/${customer._id}`}>
               {customer.lastName + " " + customer.firstName}
             </Link>
-            <div className="description">{customer.email}</div>
+            <div className="description">
+              <Link to={`/customers/contact/${customer._id}`} target="_blank">
+                {customer.email}
+              </Link>
+            </div>
           </div>
         </div>
       );
@@ -153,30 +157,39 @@ class CustomerList extends React.Component {
       );
     }
   }
+  renderSearchSortArea() {
+    return (
+      <div className="ui grid">
+        <div className="six wide column">
+          <div className="ui transparent input">
+            <input
+              onChange={this.handleTextInputChange}
+              //value={this.state.keyWord}
+              type="text"
+              placeholder="Search..."
+            />
+          </div>
+        </div>
+        <div className="six wide column">
+          <div className="ui toggle checkbox">
+            <input type="checkbox" onChange={this.handleToggleInputChange} />
+            <label>Only show customers that you created</label>
+          </div>
+        </div>
+        <div className="three wide column">
+          <div className="ui checkbox">
+            <input type="checkbox" onChange={this.handleCheckInputChange} />
+            <label>Reverse Sort</label>
+          </div>
+        </div>
+      </div>
+    );
+  }
   render() {
     return (
       <div>
+        {this.renderSearchSortArea()}
         <h2>Customers:</h2>
-        <div className="ui toggle checkbox">
-          <input type="checkbox" onChange={this.handleToggleInputChange} />
-          <label>Only show customers that you created</label>
-        </div>
-        <br />
-        <div className="ui checkbox">
-          <input type="checkbox" onChange={this.handleCheckInputChange} />
-          <label>Reverse Sort</label>
-        </div>
-        <br />
-        <br />
-        <div className="ui transparent input">
-          <input
-            onChange={this.handleTextInputChange}
-            //value={this.state.keyWord}
-            type="text"
-            placeholder="Search..."
-          />
-        </div>
-        <br />
         <div className="ui celled list">{this.renderList()}</div>
         {this.renderCreate()}
       </div>
