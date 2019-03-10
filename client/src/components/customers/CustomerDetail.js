@@ -18,7 +18,8 @@ class CustomerDetail extends React.Component {
       email,
       position,
       joinedTime,
-      description
+      description,
+      isMarried
     } = this.props.customer;
     return (
       <div className="card">
@@ -28,12 +29,15 @@ class CustomerDetail extends React.Component {
         <div className="content">
           <div className="header">
             {lastName + " " + firstName}
+
             <i
-              className={`middle aligned icon ${
-                sex === "Male" ? "male" : "female"
+              className={`middle aligned icon right floated ${
+                sex === "Male" ? "mars" : "venus"
               }`}
             />
-            <span className="right floated">{`${age} years old`}</span>
+            <span className="right floated">{`${age}     ${
+              isMarried ? "Married" : "Single"
+            }`}</span>
           </div>
 
           <div className="meta">

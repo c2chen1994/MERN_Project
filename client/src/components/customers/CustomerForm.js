@@ -8,11 +8,11 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import MenuItem from "material-ui/MenuItem";
 import { RadioButton } from "material-ui/RadioButton";
 import {
-  //Checkbox,
+  Checkbox,
   RadioButtonGroup,
   SelectField,
   TextField,
-  //Toggle,
+  Toggle,
   DatePicker
 } from "redux-form-material-ui";
 
@@ -293,17 +293,17 @@ class CustomerForm extends React.Component {
               rows={3}
             />
 
-            {/* <Field
-            name="agreeToTerms"
-            component={Checkbox}
-            label="Agree to terms?"
-          /> */}
+            <Field
+              name="isMarried"
+              component={this.renderToggle}
+              label="Is he/she married?"
+            />
 
-            {/* <Field
-            name="receiveEmails"
-            component={Toggle}
-            label="Please spam me!"
-          /> */}
+            <Field
+              name="agreed"
+              component={this.renderCheckbox}
+              label="Are you sure you agree to publish this customer information?"
+            />
           </div>
         </MuiThemeProvider>
       </React.Fragment>
@@ -329,12 +329,37 @@ class CustomerForm extends React.Component {
     );
   };
 
+  renderToggle = props => {
+    console.log(props);
+    if (!props.meta.dirty)
+      props.input.value =
+        this.props.initialValues || false
+          ? this.props.initialValues.isMarried
+          : false;
+    return (
+      <div>
+        <Toggle {...props} />
+      </div>
+    );
+  };
+
   renderSelectField = props => {
     if (props.meta.invalid)
       props.input.value = this.props.initialValues.position;
     return (
       <div>
-        <SelectField value={props.value} {...props} />
+        <SelectField {...props} />
+      </div>
+    );
+  };
+
+  renderCheckbox = props => {
+    //if (props.meta.invalid)
+    //props.input.value = this.props.initialValues.position;
+    return (
+      <div>
+        <Checkbox {...props} />
+        {this.renderError(props.meta)}
       </div>
     );
   };
@@ -357,6 +382,8 @@ class CustomerForm extends React.Component {
         onSubmit={this.props.handleSubmit(this.onSumbit)}
       >
         {this.renderFields3()}
+        <br />
+
         <button
           disabled={
             !(this.props.initialValues || false) &&
@@ -365,6 +392,7 @@ class CustomerForm extends React.Component {
           className="ui button primary"
         >
           Submit
+          <i className="middle aligned icon paper plane right floated" />{" "}
         </button>
         <button
           disabled={this.props.pristine || this.props.submitting}
@@ -372,6 +400,7 @@ class CustomerForm extends React.Component {
           onClick={this.props.reset}
         >
           {this.props.initialValues || false ? "Reset" : "Clear"}
+          <i className="middle aligned icon undo right floated " />
         </button>
       </form>
     );
@@ -414,6 +443,9 @@ const validate = formValues => {
   }
   if (!formValues.joinedTime) {
     errors.joinedTime = "Joined Time Required";
+  }
+  if (!formValues.agreed) {
+    errors.agreed = "You should check the box to submit";
   }
   return errors;
 };
