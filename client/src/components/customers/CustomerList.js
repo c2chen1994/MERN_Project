@@ -116,27 +116,65 @@ class CustomerList extends React.Component {
   }
 
   renderList = () => {
+    const kw = this.state.keyWord;
     return (this.state.keyWord.length > 0
       ? this.state.searchCustomers
       : this.state.selectedCustomers === null
       ? this.props.customers
       : this.state.selectedCustomers
     ).map(customer => {
+      const { _id, sex, lastName, firstName, email } = customer;
+      const startFM = kw.length > 0 ? firstName.toLowerCase().indexOf(kw) : -1;
+      const startLM = kw.length > 0 ? lastName.toLowerCase().indexOf(kw) : -1;
+      const startE = kw.length > 0 ? email.toLowerCase().indexOf(kw) : -1;
       return (
-        <div className="item" key={customer._id}>
+        <div className="item" key={_id}>
           {this.renderAdmin(customer)}
           <i
             className={`large middle aligned icon ${
-              customer.sex === "Male" ? "male" : "female"
+              sex === "Male" ? "male" : "female"
             }`}
           />
           <div className="content">
-            <Link to={`/customers/${customer._id}`}>
-              {customer.lastName + " " + customer.firstName}
+            <Link to={`/customers/${_id}`}>
+              {startLM < 0 ? (
+                <span>{lastName} </span>
+              ) : (
+                <span>
+                  {lastName.substr(0, startLM)}
+                  <span style={{ backgroundColor: "yellow" }}>
+                    {lastName.substr(startLM, kw.length)}
+                  </span>
+                  {lastName.substr(startLM + kw.length)}
+                  <span> </span>
+                </span>
+              )}
+
+              {startFM < 0 ? (
+                <span>{firstName} </span>
+              ) : (
+                <span>
+                  {firstName.substr(0, startFM)}
+                  <span style={{ backgroundColor: "yellow" }}>
+                    {firstName.substr(startFM, kw.length)}
+                  </span>
+                  {firstName.substr(startFM + kw.length)}
+                </span>
+              )}
             </Link>
             <div className="description">
-              <Link to={`/customers/contact/${customer._id}`} target="_blank">
-                {customer.email}
+              <Link to={`/customers/contact/${_id}`} target="_blank">
+                {startE < 0 ? (
+                  <span>{email} </span>
+                ) : (
+                  <span>
+                    {email.substr(0, startE)}
+                    <span style={{ backgroundColor: "yellow" }}>
+                      {email.substr(startE, kw.length)}
+                    </span>
+                    {email.substr(startE + kw.length)}
+                  </span>
+                )}
               </Link>
             </div>
           </div>
