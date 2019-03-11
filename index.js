@@ -4,8 +4,12 @@ const cookieSession = require("cookie-session"); // slight difference from expre
 const passport = require("passport");
 //const bodyParser = require("body-parser"); // middleware
 const keys = require("./config/keys");
+
 require("./models/User");
 require("./models/Customer");
+require("./models/Image");
+
+const Image = mongoose.model("image");
 
 //require("./models/Survey");
 require("./services/passport");
@@ -29,6 +33,7 @@ app.use(passport.session());
 
 require("./routes/authRoutes")(app);
 require("./routes/customerRestRoutes")(app);
+require("./routes/customerImageRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   // Express will serve up production assets
@@ -42,6 +47,14 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
+
+/*
+const i = new Image();
+const imgPath = "./cz.jpg";
+i.img.data = fs.readFileSync(imgPath);
+i.img.contentType = "image/png";
+i.save();
+*/
 
 app.get("/", (req, res) => res.send({ response: "Get!!!", from: "Localhost" }));
 

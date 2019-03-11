@@ -12,7 +12,6 @@ module.exports = app => {
       "firstName lastName sex"
     );
     */
-    console.log(req.params);
     res.send(customer);
   });
 
@@ -27,8 +26,6 @@ module.exports = app => {
     bodyParser.json(),
     async (req, res) => {
       const customer = await new Customer({ ...req.body }).save();
-
-      console.log(customer);
       res.send(customer);
     }
   );

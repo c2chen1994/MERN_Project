@@ -30,7 +30,8 @@ class CustomerEdit extends React.Component {
             "position",
             "joinedTime",
             "description",
-            "isMarried"
+            "isMarried",
+            "imageId"
           )}
           onSubmit={this.onSumbit}
         />

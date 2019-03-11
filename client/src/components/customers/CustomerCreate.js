@@ -6,6 +6,7 @@ import CustomerForm from "./CustomerForm";
 class CustomerCreate extends React.Component {
   onSumbit = formValues => {
     // preventDefault: redux-form does for us
+    console.log(formValues.profilePhoto);
     this.props.createCustomer(formValues);
   };
 

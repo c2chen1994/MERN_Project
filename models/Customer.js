@@ -16,7 +16,8 @@ const customerSchema = new Schema({
   position: String,
   joinedTime: Date,
   description: String,
-  isMarried: Boolean
+  isMarried: Boolean,
+  imageId: Number
 });
 
 customerSchema.plugin(autoIncrement.plugin, "customer");

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchCustomers } from "../../actions";
 import { Link } from "react-router-dom";
+import Domain from "../../Domain";
 
 class CustomerList extends React.Component {
   constructor(props) {
@@ -123,18 +124,27 @@ class CustomerList extends React.Component {
       ? this.props.customers
       : this.state.selectedCustomers
     ).map(customer => {
-      const { _id, sex, lastName, firstName, email } = customer;
+      const { _id, sex, lastName, firstName, email, imageId } = customer;
       const startFM = kw.length > 0 ? firstName.toLowerCase().indexOf(kw) : -1;
       const startLM = kw.length > 0 ? lastName.toLowerCase().indexOf(kw) : -1;
       const startE = kw.length > 0 ? email.toLowerCase().indexOf(kw) : -1;
       return (
         <div className="item" key={_id}>
           {this.renderAdmin(customer)}
-          <i
-            className={`large middle aligned icon ${
-              sex === "Male" ? "male" : "female"
-            }`}
-          />
+          {imageId == null ? (
+            <img
+              className="ui avatar image"
+              src={`./${sex.toLowerCase()}.png`}
+              alt="avatar"
+            />
+          ) : (
+            <img
+              className="ui avatar image"
+              src={`${Domain}/api/customers/image/${imageId}`}
+              alt="avatar"
+            />
+          )}
+
           <div className="content">
             <Link to={`/customers/${_id}`}>
               {startLM < 0 ? (

@@ -21,9 +21,20 @@ export const fetchUser = () => async dispatch => {
 
 export const createCustomer = formValues => async (dispatch, getState) => {
   const { userId } = getState().auth;
+  var formData = new FormData();
+  formData.append("file", formValues.profilePhoto, "img");
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data"
+    }
+  };
+  const res = await customers.post("/image", formData, config);
+  const imageId = res.data.id;
+  console.log(userId);
   const response = await customers.post("/", {
     ...formValues,
-    userId
+    userId,
+    imageId
   });
   dispatch({ type: CREATE_CUSTOMER, payload: response.data });
 
@@ -50,7 +61,23 @@ export const deleteCustomer = id => async dispatch => {
 
 export const editCustomer = (id, formValues) => async dispatch => {
   // using put will update ALL the values patch is part of
-  const response = await customers.patch(`/${id}`, formValues);
+  const resImg = await customers.get(`/${id}`);
+  let imageId = -1;
+  var formData = new FormData();
+  formData.append("file", formValues.profilePhoto, "img");
+  const config = {
+    headers: {
+      "content-type": "multipart/form-data"
+    }
+  };
+  if (resImg.imageId != null) {
+    imageId = resImg.imageId;
+    await customers.patch(`/image/${imageId}`, formData, config);
+  } else {
+    const res = await customers.post("/image", formData, config);
+    imageId = res.data.id;
+  }
+  const response = await customers.patch(`/${id}`, { ...formValues, imageId });
   dispatch({ type: EDIT_CUSTOMER, payload: response.data });
   history.push("/");
 };

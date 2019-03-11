@@ -2,9 +2,7 @@ import _ from "lodash";
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import formFields from "./formFields";
-
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-
 import MenuItem from "material-ui/MenuItem";
 import { RadioButton } from "material-ui/RadioButton";
 import {
@@ -15,6 +13,7 @@ import {
   Toggle,
   DatePicker
 } from "redux-form-material-ui";
+import Domain from "../../Domain";
 
 class CustomerForm extends React.Component {
   renderError({ touched, error }) {
@@ -299,6 +298,8 @@ class CustomerForm extends React.Component {
               label="Is he/she married?"
             />
 
+            <Field name="profilePhoto" component={this.renderUpload} />
+
             <Field
               name="agreed"
               component={this.renderCheckbox}
@@ -307,6 +308,55 @@ class CustomerForm extends React.Component {
           </div>
         </MuiThemeProvider>
       </React.Fragment>
+    );
+  };
+
+  adaptFileEventToValue = delegate => e => {
+    delegate(e.target.files[0]);
+  };
+
+  renderUpload = ({
+    input: { value: omitValue, onChange, onBlur, ...inputProps },
+    meta: omitMeta,
+    ...props
+  }) => {
+    const id =
+      this.props.initialValues == null
+        ? null
+        : this.props.initialValues.imageId != null
+        ? this.props.initialValues.imageId
+        : -1;
+    return (
+      <div>
+        <br />
+        <span>Profile Photo: </span>
+        <img
+          className="ui avatar image"
+          src={
+            id == null
+              ? `${Domain}/user.png`
+              : id < 0
+              ? `${Domain}/${this.props.initialValues.sex.toLowerCase()}.png`
+              : `${Domain}/api/customers/image/${id}`
+          }
+          alt="avatar"
+        />
+        {/* <label htmlFor="file" className="ui icon button">
+          <i className="upload icon" />
+          Upload Image
+        </label> */}
+        <input
+          type="file"
+          // style={{ display: "none" }}
+          accept="image/x-png,image/gif,image/jpeg"
+          onChange={this.adaptFileEventToValue(onChange)}
+          onBlur={this.adaptFileEventToValue(onBlur)}
+          {...inputProps}
+          {...props}
+        />
+        <br />
+        <br />
+      </div>
     );
   };
 
@@ -330,7 +380,6 @@ class CustomerForm extends React.Component {
   };
 
   renderToggle = props => {
-    console.log(props);
     if (!props.meta.dirty)
       props.input.value =
         this.props.initialValues || false
@@ -338,6 +387,7 @@ class CustomerForm extends React.Component {
           : false;
     return (
       <div>
+        <br />
         <Toggle {...props} />
       </div>
     );

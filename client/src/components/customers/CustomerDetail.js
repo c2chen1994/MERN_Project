@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchCustomer } from "../../actions";
 import faker from "faker";
+import Domain from "../../Domain";
 
 class CustomerDetail extends React.Component {
   componentDidMount() {
@@ -19,12 +20,20 @@ class CustomerDetail extends React.Component {
       position,
       joinedTime,
       description,
-      isMarried
+      isMarried,
+      imageId
     } = this.props.customer;
     return (
       <div className="card">
         <div className="image">
-          <img alt="avatar" src={faker.image.avatar()} />
+          <img
+            alt="avatar"
+            src={
+              imageId == null
+                ? faker.image.avatar()
+                : `${Domain}/api/customers/image/${imageId}`
+            }
+          />
         </div>
         <div className="content">
           <div className="header">
