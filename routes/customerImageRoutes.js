@@ -20,7 +20,7 @@ module.exports = app => {
   );
 
   app.patch(
-    "/api/customers/image:imageId",
+    "/api/customers/image/:imageId",
     requireLogin,
     multipartMiddleware,
     async (req, res) => {

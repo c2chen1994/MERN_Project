@@ -15,22 +15,20 @@ import {
 
 export const fetchUser = () => async dispatch => {
   const response = await log.get("/current_user");
-  //console.log(response.data._id);
   dispatch({ type: FETCH_USER, payload: response.data._id });
 };
 
 export const createCustomer = formValues => async (dispatch, getState) => {
   const { userId } = getState().auth;
   var formData = new FormData();
-  formData.append("file", formValues.profilePhoto, "img");
-  const config = {
-    headers: {
-      "content-type": "multipart/form-data"
-    }
-  };
-  const res = await customers.post("/image", formData, config);
+  formData.append("file", formValues.profilePhoto);
+  // const config = {
+  //   headers: {
+  //     "content-type": "multipart/form-data"
+  //   }
+  // };
+  const res = await customers.post("/image", formData);
   const imageId = res.data.id;
-  console.log(userId);
   const response = await customers.post("/", {
     ...formValues,
     userId,
@@ -64,17 +62,18 @@ export const editCustomer = (id, formValues) => async dispatch => {
   const resImg = await customers.get(`/${id}`);
   let imageId = -1;
   var formData = new FormData();
-  formData.append("file", formValues.profilePhoto, "img");
-  const config = {
-    headers: {
-      "content-type": "multipart/form-data"
-    }
-  };
-  if (resImg.imageId != null) {
-    imageId = resImg.imageId;
-    await customers.patch(`/image/${imageId}`, formData, config);
+  formData.append("file", formValues.profilePhoto);
+  // const config = {
+  //   headers: {
+  //     "content-type": "multipart/form-data"
+  //   }
+  // };
+  if (resImg.data.imageId != null) {
+    imageId = resImg.data.imageId;
+    if (formValues.profilePhoto != null)
+      await customers.patch(`/image/${imageId}`, formData);
   } else {
-    const res = await customers.post("/image", formData, config);
+    const res = await customers.post("/image", formData);
     imageId = res.data.id;
   }
   const response = await customers.patch(`/${id}`, { ...formValues, imageId });
