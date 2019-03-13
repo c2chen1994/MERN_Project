@@ -46,7 +46,8 @@ passport.use(
     {
       clientID: keys.githubClientID,
       clientSecret: keys.githubClientSecret,
-      callbackURL: "/auth/github/callback"
+      callbackURL: "/auth/github/callback",
+      proxy: true // fix https and http issues
     },
     (accessToken, refreshToken, profile, done) => {
       User.findOrCreate({ githubId: profile.id }, (err, user) => {
@@ -77,7 +78,8 @@ passport.use(
     {
       clientID: keys.linkedinClientID,
       clientSecret: keys.linkedinClientSecret,
-      callbackURL: "/auth/linkedin/callback"
+      callbackURL: "/auth/linkedin/callback",
+      proxy: true // fix https and http issues
     },
     function(accessToken, refreshToken, profile, done) {
       User.findOrCreate({ linkedinId: profile.id }, (err, user) => {
@@ -92,7 +94,8 @@ passport.use(
     {
       consumerKey: keys.twitterApiKey,
       consumerSecret: keys.twitterApiSecretKey,
-      callbackURL: "/auth/twitter/callback"
+      callbackURL: "/auth/twitter/callback",
+      proxy: true // fix https and http issues
     },
     function(token, tokenSecret, profile, cb) {
       User.findOrCreate({ twitterId: profile.id }, (err, user) => {
