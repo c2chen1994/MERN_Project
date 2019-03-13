@@ -11,8 +11,7 @@ class CustomerList extends React.Component {
       keyWord: "",
       isSelf: false,
       isReverse: false,
-      selectedCustomers: null,
-      searchCustomers: []
+      selectedCustomers: null
     };
   }
 
@@ -20,77 +19,44 @@ class CustomerList extends React.Component {
     this.props.fetchCustomers();
   }
 
-  handleToggleInputChange = event => {
-    const key = this.state.keyWord;
+  handleChange = event => {
+    console.log(this.state);
+    let r = this.state.isReverse;
+    let f = this.state.isSelf;
+    let key = this.state.keyWord;
 
-    if (!this.state.isSelf) {
-      const sCustomers = this.props.customers.filter(
-        customer => this.props.currentUserId === customer.userId
-      );
+    if (event.target.type === "checkbox" && event.target.value === "r") r = !r;
+    else if (event.target.type === "checkbox" && event.target.value === "f")
+      f = !f;
+    else key = event.target.value.trim().toLowerCase();
 
-      this.setState({
-        isSelf: true,
-        selectedCustomers: sCustomers,
-        searchCustomers: sCustomers.filter(
-          ({ firstName, lastName, email }) =>
-            lastName.toLowerCase().indexOf(key) > -1 ||
-            email.toLowerCase().indexOf(key) > -1 ||
-            firstName.toLowerCase().indexOf(key) > -1
+    const reversed = r
+      ? [...this.props.customers.reverse()]
+      : [...this.props.customers];
+
+    const filtered = f
+      ? reversed.filter(
+          customer => this.props.currentUserId === customer.userId
         )
-      });
-    } else {
-      this.setState({
-        isSelf: false,
-        selectedCustomers: this.props.customers,
-        searchCustomers: this.props.customers.filter(
-          ({ firstName, lastName, email }) =>
-            lastName.toLowerCase().indexOf(key) > -1 ||
-            email.toLowerCase().indexOf(key) > -1 ||
-            firstName.toLowerCase().indexOf(key) > -1
-        )
-      });
-    }
-  };
+      : [...reversed];
 
-  handleCheckInputChange = event => {
-    if (!this.state.isReverse) {
-      this.setState({
-        isReverse: true,
-        selectedCustomers: [
-          ...(this.state.selectedCustomers === null
-            ? this.props.customers
-            : this.state.selectedCustomers)
-        ].reverse(),
-        searchCustomers: [...this.state.searchCustomers].reverse()
-      });
-    } else {
-      this.setState({
-        isSelf: false,
-        selectedCustomers: [...this.state.selectedCustomers].reverse(),
-        searchCustomers: [...this.state.searchCustomers].reverse()
-      });
-    }
-    this.props.customers.reverse();
-  };
+    const selected =
+      key.length > 0
+        ? filtered.filter(
+            ({ firstName, lastName, email }) =>
+              lastName.toLowerCase().indexOf(key) > -1 ||
+              email.toLowerCase().indexOf(key) > -1 ||
+              firstName.toLowerCase().indexOf(key) > -1
+          )
+        : [...filtered];
 
-  handleTextInputChange = event => {
-    const key = event.target.value.trim().toLowerCase();
-    if (key.length > 0) {
-      this.setState({
-        keyWord: key,
-        searchCustomers: (this.state.selectedCustomers !== null
-          ? this.state.selectedCustomers
-          : this.props.customers
-        ).filter(
-          ({ firstName, lastName, email }) =>
-            lastName.toLowerCase().indexOf(key) > -1 ||
-            email.toLowerCase().indexOf(key) > -1 ||
-            firstName.toLowerCase().indexOf(key) > -1
-        )
-      });
-    } else {
-      this.setState({ keyWord: key, searchCustomers: [] });
-    }
+    this.setState({
+      isReverse: r,
+      isSelf: f,
+      keyWord: key,
+      selectedCustomers: selected
+    });
+    if (r) this.props.customers.reverse();
   };
 
   renderAdmin(customer) {
@@ -118,9 +84,7 @@ class CustomerList extends React.Component {
 
   renderList = () => {
     const kw = this.state.keyWord;
-    return (this.state.keyWord.length > 0
-      ? this.state.searchCustomers
-      : this.state.selectedCustomers === null
+    return (this.state.selectedCustomers == null
       ? this.props.customers
       : this.state.selectedCustomers
     ).map(customer => {
@@ -211,7 +175,7 @@ class CustomerList extends React.Component {
         <div className="six wide column">
           <div className="ui transparent input">
             <input
-              onChange={this.handleTextInputChange}
+              onChange={this.handleChange}
               //value={this.state.keyWord}
               type="text"
               placeholder="Search..."
@@ -220,13 +184,13 @@ class CustomerList extends React.Component {
         </div>
         <div className="six wide column">
           <div className="ui toggle checkbox">
-            <input type="checkbox" onChange={this.handleToggleInputChange} />
+            <input type="checkbox" onChange={this.handleChange} value="f" />
             <label>Only show customers that you created</label>
           </div>
         </div>
         <div className="three wide column">
           <div className="ui checkbox">
-            <input type="checkbox" onChange={this.handleCheckInputChange} />
+            <input type="checkbox" onChange={this.handleChange} value="r" />
             <label>Reverse Sort</label>
           </div>
         </div>
