@@ -2,10 +2,11 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Customer = mongoose.model("customer");
 const requireLogin = require("../middlewares/requireLogin");
+const requireSameUser = require("../middlewares/requireSameUser");
 
 module.exports = app => {
-  app.get("/api/customers/:costomerId", async (req, res) => {
-    const customer = await Customer.findById(req.params.costomerId);
+  app.get("/api/customers/:customerId", async (req, res) => {
+    const customer = await Customer.findById(req.params.customerId);
     /*
     const student = await Student.find(
       { lastName: /Chen/i, age: { $gte: 24 } },
@@ -30,33 +31,39 @@ module.exports = app => {
     }
   );
 
-  app.put(
-    "/api/customers",
-    requireLogin,
-    bodyParser.json(),
-    async (req, res) => {
-      const customer = await Customer.findByIdAndUpdate(req.body.id, {
-        ...req.body
-      });
-      res.send(customer);
-    }
-  );
+  // app.put(
+  //   "/api/customers",
+  //   requireLogin,
+  //   bodyParser.json(),
+  //   async (req, res) => {
+  //     const customer = await Customer.findByIdAndUpdate(req.body.id, {
+  //       ...req.body
+  //     });
+  //     res.send(customer);
+  //   }
+  // );
 
   app.patch(
-    "/api/customers/:costomerId",
+    "/api/customers/:customerId",
     requireLogin,
+    requireSameUser,
     bodyParser.json(),
     async (req, res) => {
-      const customer = await Customer.findByIdAndUpdate(req.params.costomerId, {
+      const customer = await Customer.findByIdAndUpdate(req.params.customerId, {
         ...req.body
       });
       res.send(customer);
     }
   );
 
-  app.delete("/api/customers/:costomerId", requireLogin, async (req, res) => {
-    const customer = await Customer.findById(req.params.costomerId);
-    customer.remove();
-    res.send(customer);
-  });
+  app.delete(
+    "/api/customers/:customerId",
+    requireLogin,
+    requireSameUser,
+    async (req, res) => {
+      const customer = await Customer.findById(req.params.customerId);
+      customer.remove();
+      res.send(customer);
+    }
+  );
 };

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Image = mongoose.model("image");
 const requireLogin = require("../middlewares/requireLogin");
+const requireSamePhotoCreator = require("../middlewares/requireSamePhotoCreator");
 const multipart = require("connect-multiparty");
 const multipartMiddleware = multipart();
 const fs = require("fs");
@@ -22,6 +23,7 @@ module.exports = app => {
   app.patch(
     "/api/customers/image/:imageId",
     requireLogin,
+    //requireSamePhotoCreator,
     multipartMiddleware,
     async (req, res) => {
       const id = req.params.imageId;

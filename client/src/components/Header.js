@@ -10,6 +10,7 @@ const Header = () => {
           <div className="item">
             <Link to="/" className="item">
               <i className="large home icon app-icon" />
+              Home
             </Link>
           </div>
           <div className="right item">

@@ -13,20 +13,37 @@ class GoogleAuth extends React.Component {
         return;
       case false:
         return (
-          <a href="/auth/google">
-            <button className="ui red goole button">
-              <i className="google icon" />
-              Sign In With Google
-            </button>
-          </a>
+          <div className="ui simple dropdown item">
+            Sign in with:
+            <i className="dropdown icon" />
+            <div className="menu" style={{ marginTop: "0px" }}>
+              <a href="/auth/google" className="item">
+                <i className="google icon" />
+                Google
+              </a>
+              <a href="/auth/github" className="item">
+                <i className="github icon" />
+                Github
+              </a>
+              <a href="/auth/facebook" className="item">
+                <i className="facebook icon" />
+                Facebook
+              </a>
+              <a href="/auth/twitter" className="item">
+                <i className="twitter icon" />
+                twitter
+              </a>
+              <a href="/auth/linkedin" className="item">
+                <i className="linkedin icon" />
+                Linkedin
+              </a>
+            </div>
+          </div>
         );
       default:
         return (
           <a href="/api/logout">
-            <button className="ui red goole button">
-              <i className="google icon" />
-              Sign Out
-            </button>
+            <button className="ui red goole button">Sign Out</button>
           </a>
         );
     }
