@@ -10,10 +10,10 @@ module.exports = {
   domain: process.env.DOMAIN,
   githubClientID: process.env.GITHUB_CLIENT_ID,
   githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
-  linkedinClientID: LINKEDIN_CLIENT_ID,
-  linkedinClientSecret: LINKEDIN_CLIENT_SECRET,
-  twitterApiKey: TWITTER_API_KEY,
-  twitterApiSecretKey: TWITTER_API_SECRET_KEY,
-  facebookAppID: FACEBOOK_APP_ID,
-  facebookAppSecret: FACEBOOK_APP_SECRET
+  linkedinClientID: process.env.LINKEDIN_CLIENT_ID,
+  linkedinClientSecret: process.env.LINKEDIN_CLIENT_SECRET,
+  twitterApiKey: process.env.TWITTER_API_KEY,
+  twitterApiSecretKey: process.env.TWITTER_API_SECRET_KEY,
+  facebookAppID: process.env.FACEBOOK_APP_ID,
+  facebookAppSecret: process.env.FACEBOOK_APP_SECRET
 };
