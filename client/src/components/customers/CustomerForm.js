@@ -1,7 +1,7 @@
-import _ from "lodash";
+//import _ from "lodash";
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import formFields from "./formFields";
+//import formFields from "./formFields";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import MenuItem from "material-ui/MenuItem";
 import { RadioButton } from "material-ui/RadioButton";
@@ -16,6 +16,183 @@ import {
 import Domain from "../../Domain";
 
 class CustomerForm extends React.Component {
+  state = { img: null };
+  // renderInput = ({ input, label, meta, tp }) => {
+  //   const className = `field ${meta.error && meta.touched ? "error" : ""}`;
+
+  //   return (
+  //     <div className={className}>
+  //       {tp === "radio" ? "" : <label>{label}</label>}
+  //       <input {...input} autoComplete="off" type={tp} />
+  //       {this.renderError(meta)}
+  //     </div>
+  //   );
+  // };
+
+  // renderFields2 = () => {
+  //   return (
+  //     <React.Fragment>
+  //       <div>
+  //         <label>{formFields.firstName.label}</label>
+  //         <Field
+  //           name="firstName"
+  //           component={({ input, meta }) => (
+  //             <div>
+  //               <input
+  //                 type="text"
+  //                 {...input}
+  //                 autoComplete="off"
+  //                 placeholder="First Name"
+  //               />
+  //               {this.renderError(meta)}
+  //             </div>
+  //           )}
+  //         />
+  //       </div>
+  //       <div>
+  //         <label>{formFields.lastName.label}</label>
+  //         <Field
+  //           name="lastName"
+  //           component={({ input, meta }) => (
+  //             <div>
+  //               <input
+  //                 {...input}
+  //                 autoComplete="off"
+  //                 type="text"
+  //                 placeholder="Last Name"
+  //               />
+  //               {this.renderError(meta)}
+  //             </div>
+  //           )}
+  //         />
+  //       </div>
+  //       <div>
+  //         <label>{formFields.email.label}</label>
+  //         <Field
+  //           name="email"
+  //           component={({ input, meta }) => (
+  //             <div>
+  //               <input
+  //                 type="email"
+  //                 {...input}
+  //                 autoComplete="off"
+  //                 placeholder="Email"
+  //               />
+  //               {this.renderError(meta)}
+  //             </div>
+  //           )}
+  //         />
+  //       </div>
+  //       <div>
+  //         <label>{formFields.sex.label}</label>
+  //         <div>
+  //           <label>
+  //             <Field
+  //               name="sex"
+  //               component={({ input, meta }) => (
+  //                 <div>
+  //                   <input type="radio" {...input} value="Male" />
+  //                   {this.renderError(meta)}
+  //                 </div>
+  //               )}
+  //             />
+  //             Male
+  //           </label>
+  //           <label>
+  //             <Field
+  //               name="sex"
+  //               component={({ input, meta }) => (
+  //                 <div>
+  //                   <input type="radio" {...input} value="Female" />
+  //                   {this.renderError(meta)}
+  //                 </div>
+  //               )}
+  //             />
+  //             Female
+  //           </label>
+  //         </div>
+  //       </div>
+  //       <div>
+  //         <label>{formFields.age.label}</label>
+  //         <Field
+  //           name="age"
+  //           component={({ input, meta }) => (
+  //             <div>
+  //               <input
+  //                 autoComplete="off"
+  //                 type="number"
+  //                 {...input}
+  //                 placeholder="Age"
+  //               />
+  //               {this.renderError(meta)}
+  //             </div>
+  //           )}
+  //         />
+  //       </div>
+  //       <div>
+  //         <label>{formFields.position.label}</label>
+  //         <Field
+  //           name="position"
+  //           component={({ input, meta }) => (
+  //             <div>
+  //               <select {...input}>
+  //                 <option />
+  //                 <option value="ff0000">Red</option>
+  //                 <option value="00ff00">Green</option>
+  //                 <option value="0000ff">Blue</option>
+  //               </select>
+  //               {this.renderError(meta)}
+  //             </div>
+  //           )}
+  //         />
+  //       </div>
+  //     </React.Fragment>
+  //   );
+  // };
+
+  // renderFields = () => {
+  //   return _.map(formFields, ({ label, name, type }) => {
+  //     if (type === "radio") {
+  //       return (
+  //         <div>
+  //           <label>Sex!!</label>
+  //           <div>
+  //             <label>
+  //               <Field
+  //                 name="sex"
+  //                 component={this.renderInput}
+  //                 type="radio"
+  //                 value="male"
+  //                 tp={type}
+  //               />{" "}
+  //               Male
+  //             </label>
+  //             <label>
+  //               <Field
+  //                 name="sex"
+  //                 component={this.renderInput}
+  //                 type="radio"
+  //                 value="female"
+  //                 tp={type}
+  //               />{" "}
+  //               Female
+  //             </label>
+  //           </div>
+  //         </div>
+  //       );
+  //     }
+  //     return (
+  //       <Field
+  //         key={name}
+  //         component={this.renderInput}
+  //         label={label}
+  //         name={name}
+  //         tp={type}
+  //       />
+  //     );
+  //   });
+  // };
+
   renderError({ touched, error }) {
     if (touched && error) {
       return (
@@ -26,186 +203,10 @@ class CustomerForm extends React.Component {
     }
   }
 
-  renderInput = ({ input, label, meta, tp }) => {
-    const className = `field ${meta.error && meta.touched ? "error" : ""}`;
-
-    return (
-      <div className={className}>
-        {tp === "radio" ? "" : <label>{label}</label>}
-        <input {...input} autoComplete="off" type={tp} />
-        {this.renderError(meta)}
-      </div>
-    );
-  };
-
   onSumbit = formValues => {
     // preventDefault: redux-form does for us
     //console.log(formValues);
     this.props.onSubmit(formValues);
-  };
-
-  renderFields2 = () => {
-    return (
-      <React.Fragment>
-        <div>
-          <label>{formFields.firstName.label}</label>
-          <Field
-            name="firstName"
-            component={({ input, meta }) => (
-              <div>
-                <input
-                  type="text"
-                  {...input}
-                  autoComplete="off"
-                  placeholder="First Name"
-                />
-                {this.renderError(meta)}
-              </div>
-            )}
-          />
-        </div>
-        <div>
-          <label>{formFields.lastName.label}</label>
-          <Field
-            name="lastName"
-            component={({ input, meta }) => (
-              <div>
-                <input
-                  {...input}
-                  autoComplete="off"
-                  type="text"
-                  placeholder="Last Name"
-                />
-                {this.renderError(meta)}
-              </div>
-            )}
-          />
-        </div>
-        <div>
-          <label>{formFields.email.label}</label>
-          <Field
-            name="email"
-            component={({ input, meta }) => (
-              <div>
-                <input
-                  type="email"
-                  {...input}
-                  autoComplete="off"
-                  placeholder="Email"
-                />
-                {this.renderError(meta)}
-              </div>
-            )}
-          />
-        </div>
-        <div>
-          <label>{formFields.sex.label}</label>
-          <div>
-            <label>
-              <Field
-                name="sex"
-                component={({ input, meta }) => (
-                  <div>
-                    <input type="radio" {...input} value="Male" />
-                    {this.renderError(meta)}
-                  </div>
-                )}
-              />
-              Male
-            </label>
-            <label>
-              <Field
-                name="sex"
-                component={({ input, meta }) => (
-                  <div>
-                    <input type="radio" {...input} value="Female" />
-                    {this.renderError(meta)}
-                  </div>
-                )}
-              />
-              Female
-            </label>
-          </div>
-        </div>
-        <div>
-          <label>{formFields.age.label}</label>
-          <Field
-            name="age"
-            component={({ input, meta }) => (
-              <div>
-                <input
-                  autoComplete="off"
-                  type="number"
-                  {...input}
-                  placeholder="Age"
-                />
-                {this.renderError(meta)}
-              </div>
-            )}
-          />
-        </div>
-        <div>
-          <label>{formFields.position.label}</label>
-          <Field
-            name="position"
-            component={({ input, meta }) => (
-              <div>
-                <select {...input}>
-                  <option />
-                  <option value="ff0000">Red</option>
-                  <option value="00ff00">Green</option>
-                  <option value="0000ff">Blue</option>
-                </select>
-                {this.renderError(meta)}
-              </div>
-            )}
-          />
-        </div>
-      </React.Fragment>
-    );
-  };
-
-  renderFields = () => {
-    return _.map(formFields, ({ label, name, type }) => {
-      if (type === "radio") {
-        return (
-          <div>
-            <label>Sex!!</label>
-            <div>
-              <label>
-                <Field
-                  name="sex"
-                  component={this.renderInput}
-                  type="radio"
-                  value="male"
-                  tp={type}
-                />{" "}
-                Male
-              </label>
-              <label>
-                <Field
-                  name="sex"
-                  component={this.renderInput}
-                  type="radio"
-                  value="female"
-                  tp={type}
-                />{" "}
-                Female
-              </label>
-            </div>
-          </div>
-        );
-      }
-      return (
-        <Field
-          key={name}
-          component={this.renderInput}
-          label={label}
-          name={name}
-          tp={type}
-        />
-      );
-    });
   };
 
   renderFields3 = () => {
@@ -311,7 +312,21 @@ class CustomerForm extends React.Component {
     );
   };
 
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log(this.state.img !== nextState.img);
+  //   if (this.state.img !== nextState.img) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
   adaptFileEventToValue = delegate => e => {
+    if (e.target.files[0] != null) {
+      this.setState({
+        img: URL.createObjectURL(e.target.files[0])
+      });
+    }
+
     delegate(e.target.files[0]);
   };
 
@@ -333,7 +348,9 @@ class CustomerForm extends React.Component {
         <img
           className="ui avatar image"
           src={
-            id == null
+            this.state.img != null
+              ? this.state.img
+              : id == null
               ? `${Domain}/user.png`
               : id < 0
               ? `${Domain}/${this.props.initialValues.sex.toLowerCase()}.png`

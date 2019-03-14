@@ -4,6 +4,7 @@ const GitHubStrategy = require("passport-github2").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy;
 const TwitterStrategy = require("passport-twitter").Strategy;
+const qqStrategy = require("passport-qq").Strategy;
 const mongoose = require("mongoose");
 const keys = require("../config/keys");
 const User = mongoose.model("users");
@@ -104,3 +105,18 @@ passport.use(
     }
   )
 );
+
+// passport.use(
+//   new qqStrategy(
+//     {
+//       clientID: keys.qqAppID,
+//       clientSecret: keys.qqAppKey,
+//       callbackURL: "/auth/qq/callback"
+//     },
+//     function(accessToken, refreshToken, profile, done) {
+//       User.findOrCreate({ qqId: profile.id }, function(err, user) {
+//         return done(err, user);
+//       });
+//     }
+//   )
+// );

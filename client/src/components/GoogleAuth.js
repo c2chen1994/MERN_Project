@@ -37,6 +37,18 @@ class GoogleAuth extends React.Component {
                 <i className="linkedin icon" />
                 Linkedin
               </a>
+              {/* <a href="/auth/qq" className="item">
+                <i className="qq icon" />
+                QQ
+              </a>
+              <a href="/auth/wechat" className="item">
+                <i className="wechat icon" />
+                Wechat
+              </a>
+              <a href="/auth/weibo" className="item">
+                <i className="weibo icon" />
+                Weibo
+              </a> */}
             </div>
           </div>
         );

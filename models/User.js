@@ -9,6 +9,7 @@ const userSchema = new Schema({
   facebookId: String,
   linkedinId: String,
   twitterId: String
+  //qqId: String
 });
 
 userSchema.plugin(findOrCreate);

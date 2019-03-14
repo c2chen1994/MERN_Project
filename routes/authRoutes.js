@@ -75,6 +75,16 @@ module.exports = app => {
     }
   );
 
+  // app.get("/auth/qq", passport.authenticate("qq"), function(req, res) {
+  //   // The request will be redirected to qq for authentication, so this
+  //   // function will not be called.
+  // });
+
+  // app.get("/auth/qq/callback", passport.authenticate("qq"), function(req, res) {
+  //   // Successful authentication, redirect home.
+  //   res.redirect("/");
+  // });
+
   app.get("/api/logout", (req, res) => {
     req.logout();
     res.redirect("/");

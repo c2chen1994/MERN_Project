@@ -20,7 +20,6 @@ class CustomerList extends React.Component {
   }
 
   handleChange = event => {
-    console.log(this.state);
     let r = this.state.isReverse;
     let f = this.state.isSelf;
     let key = this.state.keyWord;
